@@ -55,14 +55,19 @@ exports.config = {
       maxInstances: 5,
       //
       browserName: "chrome",
-      chromeOptions: {
-        args: ["disable-popup-blocking"],
+      "goog:chromeOptions": {
+        args: ["start-maximized"],
       },
       acceptInsecureCerts: true,
       // If outputDir is provided WebdriverIO can capture driver session logs
       // it is possible to configure which logTypes to include/exclude.
       // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
       // excludeDriverLogs: ['bugreport', 'server'],
+    },
+    {
+      maxInstances: 5,
+      browserName: "firefox",
+      acceptInsecureCerts: true,
     },
   ],
   //
@@ -99,7 +104,7 @@ exports.config = {
   baseUrl: "http://localhost",
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 10000,
+  waitforTimeout: 30000,
   //
   // Default timeout in milliseconds for request
   // if browser driver or grid doesn't send response
@@ -112,7 +117,7 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ["chromedriver", "firefox-profile"],
+  services: ["chromedriver", "firefox-profile", "geckodriver"],
 
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -140,7 +145,7 @@ exports.config = {
   // Options to be passed to Jasmine.
   jasmineOpts: {
     // Jasmine default timeout
-    defaultTimeoutInterval: 60000,
+    defaultTimeoutInterval: 150000,
     //
     // The Jasmine framework allows interception of each assertion in order to log the state of the application
     // or website depending on the result. For example, it is pretty handy to take a screenshot every time

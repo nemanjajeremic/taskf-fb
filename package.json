@@ -27,5 +27,10 @@
     "chromedriver": "^98.0.1",
     "wdio-chromedriver-service": "^7.2.8",
     "wdio-json-reporter": "^3.0.0"
+  },
+  "dependencies": {
+    "@wdio/sync": "^7.16.16",
+    "geckodriver": "^3.0.1",
+    "wdio-geckodriver-service": "^2.1.0"
   }
 }
