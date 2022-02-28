@@ -2,7 +2,8 @@
   "charter":{
     "days": "1",
     "adults": "1",
-    "children": "1"
+    "children": "1",
+    "tripType": ["4 hour trip", "Half Day Trip (AM)", "Half Day Trip (PM)"]
   },
   "user":{
     "firstName":"test", 

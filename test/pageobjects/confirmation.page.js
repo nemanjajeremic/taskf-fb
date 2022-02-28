@@ -20,8 +20,7 @@ class ConfirmationPage extends Page {
           console.log("Successfully written booking ID to file." )
         }
       })
-    }
-    ;
+    };
 
   
 }

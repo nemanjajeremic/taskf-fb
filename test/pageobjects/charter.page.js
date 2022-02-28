@@ -12,15 +12,20 @@ class CharterPage extends Page {
     return $('h1[class="headline"]')
   }
 
-  isBookingAvailable(){
-    let value = this.fourHourTripDiv.getAttribute('class');
-    if(value.includes('unavailable')){
+  isInstantBookingAvailable(tripType){
+    let value = $(`//span[normalize-space()="${tripType}"]/ancestor::li`).getAttribute('class');
+    console.log(value)
+    if(value.includes('unavailable') || this.requestToBookButton(tripType).isDisplayed()){
         return false;
     }
   }
 
   get fourHourTripDiv(){
     return $('//span[normalize-space()="4 hour trip"]/ancestor::li')
+  }
+
+  tripTypeDiv(tripType){
+    return $(`//span[normalize-space()="${tripType}"]/ancestor::li`)
   }
 
   get dateSelect(){
@@ -67,8 +72,12 @@ class CharterPage extends Page {
     return $("//td[contains(@class, 'active') and contains(@class, 'day')]//following::td[not(contains(@class, 'disabled'))]")
   }
 
-  get instantBookButton(){
-    return $("//span[normalize-space()='4 hour trip']/ancestor::li[@class='package-item']//div[@class='row']//button[normalize-space()='Instant Book']");
+  instantBookButton(tripType){
+    return $(`//span[normalize-space()='${tripType}']/ancestor::li[@class='package-item']//div[@class='row']//button[normalize-space()='Instant Book']`);
+  }
+
+  requestToBookButton(tripType){
+    return $(`//span[normalize-space()='${tripType}']/ancestor::li[@class='package-item']//div[@class='row']//button[normalize-space()='Request to Book']`);
   } 
 
   get changeSearchButton(){
@@ -138,18 +147,19 @@ class CharterPage extends Page {
     this.checkAvailabilityButton.click();
   }
 
-  bookFirstAvailableDate(){
+  findAndBookFirstAvailableDate(tripType){
     browser.pause(500)
-    let flag = this.isBookingAvailable();
+    let flag = this.isInstantBookingAvailable(tripType);
     while(flag === false){
       this.changeSearchButton.waitForDisplayed();
       this.dateSelect.click();
       this.nextAvailableDate.click();
       this.checkAvailabilityButton.click();
       browser.pause(500)
-      flag = this.isBookingAvailable();
+      flag = this.isInstantBookingAvailable(tripType);
     }
-    this.instantBookButton.click();
+    
+    this.instantBookButton(tripType).click();
   } 
 }
 

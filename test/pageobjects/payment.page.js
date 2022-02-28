@@ -15,6 +15,7 @@ class PaymentPage extends Page {
   get creditCardHolderNameInput(){ return $('[id="cardholder-name"]')}
   get zipCodeInput(){ return $('[id="postal-code"')} 
   get confirmBookingButton(){ return $('//button[text()="Confirm booking"]')}
+  get finalizingPaymentMessage(){ return $('//*[text()="Finalizing your payment"]')}
   
   get creditCardNumberiFrame (){return $('[id="braintree-hosted-field-number"]')} 
   get credCardExpirationiFrame (){return $('[id="braintree-hosted-field-expirationDate"]')} 
@@ -42,7 +43,6 @@ class PaymentPage extends Page {
     browser.switchToFrame(this.credCardZipiFrame)
     this.zipCodeInput.setValue(charterData.payment.zipcode)
     browser.switchToParentFrame();
-    this.confirmBookingButton.click();
   }
 }
 
