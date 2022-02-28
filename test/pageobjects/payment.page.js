@@ -1,6 +1,7 @@
 
 
 const Page = require('./page');
+const charterData = require("../data/charterData.json");
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -25,27 +26,21 @@ class PaymentPage extends Page {
   }
 
   enterPaymentData(){
-    let creditCardNumber = "378282246310005"
-    let creditCardExpirationDate = "0325"
-    let creditCardCvv = "1234"
-    let creditCardHolderName = "Test User"
-    let zipcode = "12345"
-
     this.confirmBookingButton.waitForDisplayed();
     browser.switchToFrame(this.creditCardNumberiFrame)
-    this.creditCardNumberInput.setValue(creditCardNumber)
+    this.creditCardNumberInput.setValue(charterData.payment.creditCardNumber)
     browser.switchToParentFrame();
     browser.switchToFrame(this.credCardExpirationiFrame)
-    this.creditCardExpirationInput.setValue(creditCardExpirationDate)
+    this.creditCardExpirationInput.setValue(charterData.payment.creditCardExpirationDate)
     browser.switchToParentFrame();
     browser.switchToFrame(this.credCardCvviFrame)
-    this.creditCardCvvInput.setValue(creditCardCvv)
+    this.creditCardCvvInput.setValue(charterData.payment.creditCardCvv)
     browser.switchToParentFrame();
     browser.switchToFrame(this.credCardHolderiFrame)
-    this.creditCardHolderNameInput.setValue(creditCardHolderName)
+    this.creditCardHolderNameInput.setValue(charterData.payment.creditCardHolderName)
     browser.switchToParentFrame();
     browser.switchToFrame(this.credCardZipiFrame)
-    this.zipCodeInput.setValue(zipcode)
+    this.zipCodeInput.setValue(charterData.payment.zipcode)
     browser.switchToParentFrame();
     this.confirmBookingButton.click();
   }

@@ -1,0 +1,20 @@
+{
+  "charter":{
+    "days": "1",
+    "adults": "1",
+    "children": "1"
+  },
+  "user":{
+    "firstName":"test", 
+    "lastName": "user",
+    "phoneNumber": "+23456543",
+    "message": "Hellooooooo!"
+  },
+  "payment":{
+    "creditCardNumber" : "378282246310005",
+    "creditCardExpirationDate" : "0325",
+    "creditCardCvv" : "1234",
+    "creditCardHolderName" : "Test User",
+    "zipcode" : "12345"
+  }
+}

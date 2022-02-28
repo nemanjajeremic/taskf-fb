@@ -8,6 +8,7 @@ class ConfirmationPage extends Page {
     get createPasswordInput (){return $('[id="password"]')} 
     get createPasswordButton (){return $('[data-testid="auth-submit-button"]')} 
     get bookingConfirmationHeading (){return $('//*[contains(text(), "Your booking is now confirmed")]')} 
+    get bookingNumberConfirmation (){return $('//*[contains(text(), "Your booking number is:")]')} 
     get bookingIdText (){return $('[data-testid="booking-id"]').getText();}
     
     saveBookingIdToFile(){

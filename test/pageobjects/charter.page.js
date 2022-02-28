@@ -76,19 +76,33 @@ class CharterPage extends Page {
   }
 
   get adultsNumberLabel(){
-    return $('[id="booking_form_step1"] [class="adults-number"]')
+    return $('//*[@id="booking_form_step1"]//*[@class="adults-number"]/../.')
   }
   
   get childrensNumberLabel(){
-    return $('[id="booking_form_step1"] [class="children-number"]')
+    return $('//*[@id="booking_form_step1"]//*[@class="children-number"]/../.')
+  }
+
+  get amountOfSelectedDays(){
+    return $('select[id="booking_days"] [selected]').getValue()
+  }
+
+  get amountOfSelectedChidren(){
+    return $('form[name="booking_form_step1"] input[name="booking_children"]').getValue()
+  }
+
+  get amountOfSelectedPersons(){
+    return $('form[name="booking_form_step1"] input[name="booking_persons"]').getValue()
+  }
+
+  amountOfSelectedAdults(){
+    return this.amountOfSelectedPersons-this.amountOfSelectedChidren+""
   }
 
   setNumberOfPeople(adults, children){
     let currentNumberOfAdults = this.adultsNumberLabel.getText()
     let currentNumberOfChildren = this.childrensNumberLabel.getText()
-    console.log('--------------------------')
-    console.log(currentNumberOfAdults)
-    console.log(currentNumberOfChildren)
+
     while(currentNumberOfAdults < adults){
       this.addAdultButton.click();
       currentNumberOfAdults = this.adultsNumberLabel.getText()
