@@ -7,6 +7,11 @@ const Page = require('./page');
  */
 class CharterPage extends Page {
 
+
+  get charterTitleLabel(){
+    return $('h1[class="headline"]')
+  }
+
   isBookingAvailable(){
     let value = this.fourHourTripDiv.getAttribute('class');
     if(value.includes('unavailable')){
@@ -38,8 +43,20 @@ class CharterPage extends Page {
     return $("form[name='booking_form_step1'] [class='search-form-persons'] input[type='text']")
   }
 
-  get addChild(){
+  get addAdultButton(){
+    return $("form[name='booking_form_step1'] button[class*='adults-plus']");
+  }
+
+  get removeAdultButton(){
+    return $("form[name='booking_form_step1'] button[class*='adults-minus']");
+  }
+
+  get addChildButton(){
     return $("form[name='booking_form_step1'] button[class*='children-plus']");
+  }
+
+  get removeChildButton(){
+    return $("form[name='booking_form_step1'] button[class*='children-minus']");
   }
 
   get checkAvailabilityButton(){
@@ -58,13 +75,51 @@ class CharterPage extends Page {
     return $('//button[@id="change-search-btn"]')
   }
 
-  enterCharterCriteria(days){
+  get adultsNumberLabel(){
+    return $('[id="booking_form_step1"] [class="adults-number"]')
+  }
+  
+  get childrensNumberLabel(){
+    return $('[id="booking_form_step1"] [class="children-number"]')
+  }
+
+  setNumberOfPeople(adults, children){
+    let currentNumberOfAdults = this.adultsNumberLabel.getText()
+    let currentNumberOfChildren = this.childrensNumberLabel.getText()
+    console.log('--------------------------')
+    console.log(currentNumberOfAdults)
+    console.log(currentNumberOfChildren)
+    while(currentNumberOfAdults < adults){
+      this.addAdultButton.click();
+      currentNumberOfAdults = this.adultsNumberLabel.getText()
+
+    }
+    while(currentNumberOfAdults > adults){
+      this.removeAdultButton.click();
+      currentNumberOfAdults = this.adultsNumberLabel.getText()
+
+    }
+    while(currentNumberOfAdults > adults){
+      this.removeChildButton.click();
+      currentNumberOfChildren = this.adultsNumberLabel.getText()
+
+    }
+    while(currentNumberOfChildren < children){
+      this.addChildButton.click();
+      currentNumberOfChildren = this.childrensNumberLabel.getText()
+
+    } 
+  }
+
+
+  enterCharterCriteria(days, adults, children){
     this.dateSelect.click();
     this.today.click();
     this.numberOfDaysInput.click();
     this.numberOfDays(days).click();
     this.numberOfPeopleInput.click();
-    this.addChild.click();
+    this.setNumberOfPeople(adults,children);
+    // this.addChildButton.click();
     //click somewhere out of focus and verify that dropdown is hidden
     this.checkAvailabilityButton.click();
   }

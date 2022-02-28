@@ -10,9 +10,9 @@ class ConfirmationPage extends Page {
     get bookingConfirmationHeading (){return $('//*[contains(text(), "Your booking is now confirmed")]')} 
     get bookingIdText (){return $('[data-testid="booking-id"]').getText();}
     
-    saveBookingId(){
+    saveBookingIdToFile(){
       let bookingId = this.bookingIdText.slice(0, -1)
-      fs.writeFile("bookingId.txt", bookingId, function (error) {
+      fs.appendFile("bookingId.txt", bookingId+"\n", function (error) {
         if (error) {
           console.log(error)
         } else {

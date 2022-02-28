@@ -27,6 +27,10 @@ class DetailsPage extends Page {
       return $('button[type="Submit"]')
     }
 
+    get detailsContainer(){
+      return $('[data-testid="checkout-step-2"]')
+    }
+
     createRandomEmail(suffix){
       let chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
       let string = '';

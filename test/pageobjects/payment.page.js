@@ -20,6 +20,9 @@ class PaymentPage extends Page {
   get credCardCvviFrame (){return $('[id="braintree-hosted-field-cvv"]')} 
   get credCardHolderiFrame (){return $('[id="braintree-hosted-field-cardholderName"]')} 
   get credCardZipiFrame (){return $('[id="braintree-hosted-field-postalCode"]')} 
+  get paymentContainer(){
+    return $('[data-testid="checkout-step-3"]')
+  }
 
   enterPaymentData(){
     let creditCardNumber = "378282246310005"
