@@ -36,7 +36,7 @@ describe("My Login application", () => {
   it("Verify that user can enter payment data and proced to confirmation page", () => {
      PaymentPage.enterPaymentData();
      PaymentPage.confirmBookingButton.click();
-    //  expect(ConfirmationPage.bookingConfirmationHeading).toBeDisplayed(); 
+
      expect(PaymentPage.finalizingPaymentMessage).toHaveText("Finalizing your payment");  
   });
 
@@ -48,6 +48,7 @@ describe("My Login application", () => {
      ConfirmationPage.createPasswordButton.click();
 
      expect(ConfirmationPage.bookingNumberConfirmation).toBeDisplayed();
+     expect(browser).toHaveUrlContaining("fishingbooker.com/charters/book_done")
   });
 
 });
