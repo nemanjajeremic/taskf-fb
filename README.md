@@ -12,7 +12,10 @@ Run `npm run wdio` to execute the test.
 
 ## Reporting
 
-Allure reported is used, to run Allure server with report, run ``npm run report``.
+It is necessary to have Allure CLI, which can be installed by following the instructions located here:
+https://docs.qameta.io/allure-report/reporting/commandline.
+
+To run Allure server with report, run ``npm run report``.
 
 ## Additional
 
