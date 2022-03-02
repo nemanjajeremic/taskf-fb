@@ -1,166 +1,172 @@
-
-
-const Page = require('./page');
+const Page = require("./page");
 
 /**
  * sub page containing specific selectors and methods for a specific page
  */
 class CharterPage extends Page {
-
-
-  get charterTitleLabel(){
-    return $('h1[class="headline"]')
+  get charterTitleLabel() {
+    return $('h1[class="headline"]');
   }
 
-  isInstantBookingAvailable(tripType){
-    let value = $(`//span[normalize-space()="${tripType}"]/ancestor::li`).getAttribute('class');
-    console.log(value)
-    if(value.includes('unavailable') || this.requestToBookButton(tripType).isDisplayed()){
-        return false;
+  isInstantBookingAvailable(tripType) {
+    let value = $(
+      `//span[normalize-space()="${tripType}"]/ancestor::li`
+    ).getAttribute("class");
+    if (
+      value.includes("unavailable") ||
+      this.requestToBookButton(tripType).isDisplayed()
+    ) {
+      return false;
     }
   }
 
-  get fourHourTripDiv(){
-    return $('//span[normalize-space()="4 hour trip"]/ancestor::li')
+  get fourHourTripDiv() {
+    return $('//span[normalize-space()="4 hour trip"]/ancestor::li');
   }
 
-  tripTypeDiv(tripType){
-    return $(`//span[normalize-space()="${tripType}"]/ancestor::li`)
+  tripTypeDiv(tripType) {
+    return $(`//span[normalize-space()="${tripType}"]/ancestor::li`);
   }
 
-  get dateSelect(){
+  get dateSelect() {
     return $('[id="booking_date_availability_form_search"]');
   }
 
-  get today(){
+  get today() {
     return $("td[class='day']");
   }
 
-  get numberOfDaysInput(){
+  get numberOfDaysInput() {
     return $("select[id='booking_days']");
   }
 
-  numberOfDays(number){
+  numberOfDays(number) {
     return $(`option[value='${number}']`);
   }
 
-  get numberOfPeopleInput(){
-    return $("form[name='booking_form_step1'] [class='search-form-persons'] input[type='text']")
+  get numberOfPeopleInput() {
+    return $(
+      "form[name='booking_form_step1'] [class='search-form-persons'] input[type='text']"
+    );
   }
 
-  get addAdultButton(){
+  get addAdultButton() {
     return $("form[name='booking_form_step1'] button[class*='adults-plus']");
   }
 
-  get removeAdultButton(){
+  get removeAdultButton() {
     return $("form[name='booking_form_step1'] button[class*='adults-minus']");
   }
 
-  get addChildButton(){
+  get addChildButton() {
     return $("form[name='booking_form_step1'] button[class*='children-plus']");
   }
 
-  get removeChildButton(){
+  get removeChildButton() {
     return $("form[name='booking_form_step1'] button[class*='children-minus']");
   }
 
-  get checkAvailabilityButton(){
+  get checkAvailabilityButton() {
     return $('[id="check-availability-btn"]');
   }
 
-  get nextAvailableDate(){
-    return $("//td[contains(@class, 'active') and contains(@class, 'day')]//following::td[not(contains(@class, 'disabled'))]")
+  get nextAvailableDate() {
+    return $(
+      "//td[contains(@class, 'active') and contains(@class, 'day')]//following::td[not(contains(@class, 'disabled'))]"
+    );
   }
 
-  instantBookButton(tripType){
-    return $(`//span[normalize-space()='${tripType}']/ancestor::li[@class='package-item']//div[@class='row']//button[normalize-space()='Instant Book']`);
+  instantBookButton(tripType) {
+    return $(
+      `//span[normalize-space()='${tripType}']/ancestor::li[@class='package-item']//div[@class='row']//button[normalize-space()='Instant Book']`
+    );
   }
 
-  requestToBookButton(tripType){
-    return $(`//span[normalize-space()='${tripType}']/ancestor::li[@class='package-item']//div[@class='row']//button[normalize-space()='Request to Book']`);
-  } 
-
-  get changeSearchButton(){
-    return $('//button[@id="change-search-btn"]')
+  requestToBookButton(tripType) {
+    return $(
+      `//span[normalize-space()='${tripType}']/ancestor::li[@class='package-item']//div[@class='row']//button[normalize-space()='Request to Book']`
+    );
   }
 
-  get adultsNumberLabel(){
-    return $('//*[@id="booking_form_step1"]//*[@class="adults-number"]/../.')
-  }
-  
-  get childrensNumberLabel(){
-    return $('//*[@id="booking_form_step1"]//*[@class="children-number"]/../.')
+  get changeSearchButton() {
+    return $('//button[@id="change-search-btn"]');
   }
 
-  get amountOfSelectedDays(){
-    return $('select[id="booking_days"] [selected]').getValue()
+  get adultsNumberLabel() {
+    return $('//*[@id="booking_form_step1"]//*[@class="adults-number"]/../.');
   }
 
-  get amountOfSelectedChidren(){
-    return $('form[name="booking_form_step1"] input[name="booking_children"]').getValue()
+  get childrensNumberLabel() {
+    return $('//*[@id="booking_form_step1"]//*[@class="children-number"]/../.');
   }
 
-  get amountOfSelectedPersons(){
-    return $('form[name="booking_form_step1"] input[name="booking_persons"]').getValue()
+  get amountOfSelectedDays() {
+    return $('select[id="booking_days"] [selected]').getValue();
   }
 
-  amountOfSelectedAdults(){
-    return this.amountOfSelectedPersons-this.amountOfSelectedChidren+""
+  get amountOfSelectedChidren() {
+    return $(
+      'form[name="booking_form_step1"] input[name="booking_children"]'
+    ).getValue();
   }
 
-  setNumberOfPeople(adults, children){
-    let currentNumberOfAdults = this.adultsNumberLabel.getText()
-    let currentNumberOfChildren = this.childrensNumberLabel.getText()
+  get amountOfSelectedPersons() {
+    return $(
+      'form[name="booking_form_step1"] input[name="booking_persons"]'
+    ).getValue();
+  }
 
-    while(currentNumberOfAdults < adults){
+  amountOfSelectedAdults() {
+    return this.amountOfSelectedPersons - this.amountOfSelectedChidren + "";
+  }
+
+  setNumberOfPeople(adults, children) {
+    let currentNumberOfAdults = this.adultsNumberLabel.getText();
+    let currentNumberOfChildren = this.childrensNumberLabel.getText();
+
+    while (currentNumberOfAdults < adults) {
       this.addAdultButton.click();
-      currentNumberOfAdults = this.adultsNumberLabel.getText()
-
+      currentNumberOfAdults = this.adultsNumberLabel.getText();
     }
-    while(currentNumberOfAdults > adults){
+    while (currentNumberOfAdults > adults) {
       this.removeAdultButton.click();
-      currentNumberOfAdults = this.adultsNumberLabel.getText()
-
+      currentNumberOfAdults = this.adultsNumberLabel.getText();
     }
-    while(currentNumberOfAdults > adults){
+    while (currentNumberOfAdults > adults) {
       this.removeChildButton.click();
-      currentNumberOfChildren = this.adultsNumberLabel.getText()
-
+      currentNumberOfChildren = this.adultsNumberLabel.getText();
     }
-    while(currentNumberOfChildren < children){
+    while (currentNumberOfChildren < children) {
       this.addChildButton.click();
-      currentNumberOfChildren = this.childrensNumberLabel.getText()
-
-    } 
+      currentNumberOfChildren = this.childrensNumberLabel.getText();
+    }
   }
 
-
-  enterCharterCriteria(days, adults, children){
+  enterCharterCriteria(days, adults, children) {
     this.dateSelect.click();
     this.today.click();
     this.numberOfDaysInput.click();
     this.numberOfDays(days).click();
     this.numberOfPeopleInput.click();
-    this.setNumberOfPeople(adults,children);
+    this.setNumberOfPeople(adults, children);
     // this.addChildButton.click();
     //click somewhere out of focus and verify that dropdown is hidden
     this.checkAvailabilityButton.click();
   }
 
-  findAndBookFirstAvailableDate(tripType){
-    browser.pause(500)
+  findAndBookFirstAvailableDate(tripType) {
+    browser.pause(500);
     let flag = this.isInstantBookingAvailable(tripType);
-    while(flag === false){
+    while (flag === false) {
       this.changeSearchButton.waitForDisplayed();
       this.dateSelect.click();
       this.nextAvailableDate.click();
       this.checkAvailabilityButton.click();
-      browser.pause(500)
+      browser.pause(500);
       flag = this.isInstantBookingAvailable(tripType);
     }
-    
     this.instantBookButton(tripType).click();
-  } 
+  }
 }
 
 module.exports = new CharterPage();
